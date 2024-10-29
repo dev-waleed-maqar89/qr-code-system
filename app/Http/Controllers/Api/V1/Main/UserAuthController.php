@@ -7,6 +7,7 @@ use App\Http\Requests\Api\V1\Min\UserRegisterRequest;
 use App\Http\Traits\ApiResponseTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class UserAuthController extends Controller
 {
@@ -19,7 +20,9 @@ class UserAuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
-
+        $qrCode = QrCode::generate($user->id);
+        $user->qr_code = $qrCode;
+        $user->save();
         $token = $user->createToken('api_token')->plainTextToken;
         $data = [
             'user' => $user,
