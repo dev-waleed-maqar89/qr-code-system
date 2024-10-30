@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Dashboard\AdminRegisterRequest;
+use App\Http\Resources\Api\V1\Dashboard\AdminResource;
 use App\Http\Traits\ApiResponseTrait;
 use App\Models\Admin;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class AdminAuthController extends Controller
         ]);
         $token = $admin->createToken('api_token')->plainTextToken;
         $data = [
-            'admin' => $admin,
+            'admin' => new AdminResource($admin),
             'token' => $token
         ];
         return $this->apiSuccess($data);
@@ -42,7 +43,7 @@ class AdminAuthController extends Controller
         $admin = Admin::where('username', $request->username)->first();
         $token = $admin->createToken('api_token')->plainTextToken;
         $data = [
-            'admin' => $admin,
+            'admin' => new AdminResource($admin),
             'token' => $token
         ];
         return $this->apiSuccess(data: $data, message: 'Logged in successfully');
