@@ -31,4 +31,9 @@ class UserAuthController extends Controller
         ];
         return $this->apiSuccess($data);
     }
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return $this->apiSuccess(message: 'Logged out successfully');
+    }
 }

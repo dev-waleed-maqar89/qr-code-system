@@ -9,5 +9,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::post('/user/register', [UserAuthController::class, 'register']);
+    Route::group(['prefix' => 'auth'], function () {
+        Route::post('/user/register', [UserAuthController::class, 'register']);
+        Route::post('/user/logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
+    });
 });
