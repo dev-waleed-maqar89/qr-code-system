@@ -17,4 +17,11 @@ class Admin extends Authenticatable
         'password',
         'role',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed'
+        ];
+    }
 }

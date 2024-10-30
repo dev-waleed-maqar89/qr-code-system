@@ -7,6 +7,7 @@ use App\Http\Requests\Api\V1\Dashboard\AdminRegisterRequest;
 use App\Http\Traits\ApiResponseTrait;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {
@@ -26,5 +27,24 @@ class AdminAuthController extends Controller
             'token' => $token
         ];
         return $this->apiSuccess($data);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+        $credentials = $request->only('username', 'password');
+        if (!Auth::guard('admin')->attempt($credentials)) {
+            return $this->apiError(message: 'Invalid credentials', code: 401);
+        }
+        $admin = Admin::where('username', $request->username)->first();
+        $token = $admin->createToken('api_token')->plainTextToken;
+        $data = [
+            'admin' => $admin,
+            'token' => $token
+        ];
+        return $this->apiSuccess(data: $data, message: 'Logged in successfully');
     }
 }

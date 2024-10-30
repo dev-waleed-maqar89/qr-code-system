@@ -17,5 +17,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/user/logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
         // admin routes
         Route::post('/admin/register', [AdminAuthController::class, 'register']);
+        Route::post('/admin/login', [AdminAuthController::class, 'login']);
     });
 });
