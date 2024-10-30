@@ -31,6 +31,25 @@ class UserAuthController extends Controller
         ];
         return $this->apiSuccess($data);
     }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+        $credentials = $request->only('email', 'password');
+        if (!auth()->attempt($credentials)) {
+            return $this->apiError(message: 'Invalid credentials', code: 401);
+        }
+        $user = User::where('email', $request->email)->first();
+        $token = $user->createToken('api_token')->plainTextToken;
+        $data = [
+            'user' => new UserResource($user),
+            'token' => $token
+        ];
+        return $this->apiSuccess(data: $data, message: 'Logged in successfully');
+    }
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
