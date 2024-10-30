@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Main;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Min\UserRegisterRequest;
+use App\Http\Resources\Api\V1\Main\UserResource;
 use App\Http\Traits\ApiResponseTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class UserAuthController extends Controller
         $user->save();
         $token = $user->createToken('api_token')->plainTextToken;
         $data = [
-            'user' => $user,
+            'user' => new UserResource($user),
             'token' => $token
         ];
         return $this->apiSuccess($data);
