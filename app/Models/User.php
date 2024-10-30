@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'qr_code',
+        'parent_email',
     ];
 
     /**
