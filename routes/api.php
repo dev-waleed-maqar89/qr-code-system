@@ -40,7 +40,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/paper/store', [AdminPaperController::class, 'store']);
             // score routes
             Route::post('/score/store', [AdminScoreController::class, 'store']);
-            Route::get('paper/{paper}/scores', [AdminPaperController::class, 'scores']);
         }
     );
+    Route::get('paper/{paper}/scores', [AdminPaperController::class, 'scores']);
 });
