@@ -33,7 +33,7 @@ Route::group(['prefix' => 'v1'], function () {
             // question routes
             Route::post('/question/store', [AdminQuestionController::class, 'store']);
             // answer routes
-            // Route::post('/answer/store', [AdminAnswerController::class, 'store']);
+            Route::post('/answer/store', [AdminAnswerController::class, 'store']);
         }
     );
 });
