@@ -29,4 +29,11 @@ class AdminPaperController extends Controller
 
         return $this->apiSuccess(message: 'Paper created successfully', data: compact('paper'));
     }
+
+    public function scores(Paper $paper)
+    {
+
+        $scores = $paper->scores()->paginate(10);
+        return $this->apiSuccess(data: compact('scores'));
+    }
 }

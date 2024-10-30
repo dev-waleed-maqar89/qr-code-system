@@ -11,4 +11,9 @@ class Paper extends Model
         'title',
         'max_score',
     ];
+
+    public function scores()
+    {
+        return $this->hasMany(PaperScore::class);
+    }
 }
