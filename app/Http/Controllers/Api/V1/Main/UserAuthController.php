@@ -19,6 +19,7 @@ class UserAuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'parent_email' => $request->parent_email,
             'password' => bcrypt($request->password)
         ]);
         $qrCode = QrCode::generate($user->id);
