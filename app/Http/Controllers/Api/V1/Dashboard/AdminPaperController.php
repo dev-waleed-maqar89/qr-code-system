@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Dashboard\PaperCreateRequest;
+use App\Http\Resources\Api\V1\Dashboard\PaperScoreResource;
 use App\Http\Traits\ApiResponseTrait;
 use App\Models\Paper;
 use Illuminate\Http\Request;
@@ -30,10 +31,11 @@ class AdminPaperController extends Controller
         return $this->apiSuccess(message: 'Paper created successfully', data: compact('paper'));
     }
 
-    public function scores(Paper $paper)
+    public function scores(Request $request, Paper $paper)
     {
-
-        $scores = $paper->scores()->paginate(10);
+        $perPage = $request->per_page ?? 25;
+        $scores = $paper->scores()->orderBy('score', 'desc')->paginate($perPage);
+        $scores = PaperScoreResource::collection($scores);
         return $this->apiSuccess(data: compact('scores'));
     }
 }
