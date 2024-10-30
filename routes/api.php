@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Dashboard\AdminAuthController;
 use App\Http\Controllers\Api\V1\Dashboard\AdminExamController;
 use App\Http\Controllers\Api\V1\Dashboard\AdminPaperController;
 use App\Http\Controllers\Api\V1\Dashboard\AdminQuestionController;
+use App\Http\Controllers\Api\V1\Dashboard\AdminScoreController;
 use App\Http\Controllers\Api\V1\Main\UserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,7 @@ Route::group(['prefix' => 'v1'], function () {
             // paper routes
             Route::post('/paper/store', [AdminPaperController::class, 'store']);
             // score routes
+            Route::post('/score/store', [AdminScoreController::class, 'store']);
         }
     );
 });

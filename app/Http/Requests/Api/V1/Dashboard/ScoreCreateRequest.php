@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1\Dashboard;
 
+use App\Models\Paper;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ScoreCreateRequest extends FormRequest
@@ -21,11 +22,12 @@ class ScoreCreateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $paper = Paper::find($this->paper_id);
+        $maxScore = $paper->max_score;
         return [
             'paper_id' => ['required', 'exists:papers,id'],
             'user_id' => ['required', 'exists:users,id'],
-            'admin_id' => ['required', 'exists:admins,id'],
-            'score' => ['required', 'numeric'],
+            'score' => ['required', 'numeric', 'min:0', 'max:' . $maxScore],
         ];
     }
 }
