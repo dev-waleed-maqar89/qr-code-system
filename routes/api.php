@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Dashboard\AdminAuthController;
+use App\Http\Controllers\Api\V1\Dashboard\AdminExamController;
 use App\Http\Controllers\Api\V1\Main\UserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +20,13 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/admin/register', [AdminAuthController::class, 'register']);
         Route::post('/admin/login', [AdminAuthController::class, 'login']);
     });
+    Route::group(
+        [
+            'prefix' => 'dashboard',
+            'middleware' => ['auth:sanctum', 'admin:supervisor,admin,editor']
+        ],
+        function () {
+            Route::post('/exam/store', [AdminExamController::class, 'store']);
+        }
+    );
 });
