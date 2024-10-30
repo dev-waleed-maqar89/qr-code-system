@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\Dashboard\AdminAnswerController;
 use App\Http\Controllers\Api\V1\Dashboard\AdminAuthController;
 use App\Http\Controllers\Api\V1\Dashboard\AdminExamController;
+use App\Http\Controllers\Api\V1\Dashboard\AdminPaperController;
 use App\Http\Controllers\Api\V1\Dashboard\AdminQuestionController;
 use App\Http\Controllers\Api\V1\Main\UserAuthController;
 use Illuminate\Http\Request;
@@ -34,6 +35,9 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/question/store', [AdminQuestionController::class, 'store']);
             // answer routes
             Route::post('/answer/store', [AdminAnswerController::class, 'store']);
+            // paper routes
+            Route::post('/paper/store', [AdminPaperController::class, 'store']);
+            // score routes
         }
     );
 });
