@@ -26,6 +26,14 @@ class User extends Authenticatable
         'parent_email',
     ];
 
+    public function scores()
+    {
+        return $this->hasMany(PaperScore::class);
+    }
+    public function getTotalScoreAttribute()
+    {
+        return $this->scores->sum('score');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
