@@ -38,6 +38,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/answer/store', [AdminAnswerController::class, 'store']);
             // paper routes
             Route::post('/paper/store', [AdminPaperController::class, 'store']);
+            Route::put('/paper/{paper}/finish-marking', [AdminPaperController::class, 'finish_marking']);
             // score routes
             Route::post('/score/store', [AdminScoreController::class, 'store']);
         }

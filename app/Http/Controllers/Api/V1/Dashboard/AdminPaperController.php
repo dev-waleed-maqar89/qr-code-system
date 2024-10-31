@@ -38,4 +38,10 @@ class AdminPaperController extends Controller
         $scores = PaperScoreResource::collection($scores);
         return $this->apiSuccess(data: compact('scores'));
     }
+
+    public function finish_marking(Paper $paper)
+    {
+        $paper->scores()->update(['is_marked' => 1]);
+        return $this->apiSuccess(message: 'Marked successfully');
+    }
 }
