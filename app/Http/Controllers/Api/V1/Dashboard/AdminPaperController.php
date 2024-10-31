@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Dashboard\PaperCreateRequest;
 use App\Http\Resources\Api\V1\Dashboard\PaperScoreResource;
 use App\Http\Traits\ApiResponseTrait;
+use App\Mail\Dashboard\UserScoreMail;
 use App\Models\Paper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AdminPaperController extends Controller
@@ -41,6 +43,9 @@ class AdminPaperController extends Controller
 
     public function finish_marking(Paper $paper)
     {
+        foreach ($paper->scores as $score) {
+            Mail::to($score->user->parent_email)->send(new UserScoreMail($score));
+        }
         $paper->scores()->update(['is_marked' => 1]);
         return $this->apiSuccess(message: 'Marked successfully');
     }
