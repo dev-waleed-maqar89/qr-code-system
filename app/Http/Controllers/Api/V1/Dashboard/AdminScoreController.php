@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Dashboard\ScoreCreateRequest;
+use App\Http\Resources\Api\V1\Dashboard\PaperScoreResource;
 use App\Http\Traits\ApiResponseTrait;
 use App\Models\Paper;
 use App\Models\PaperScore;
@@ -25,6 +26,16 @@ class AdminScoreController extends Controller
         ]);
 
         return $this->apiSuccess(data: compact(['score']), message: 'Score registered successfully');
+    }
+
+    public function show($id)
+    {
+        $score = PaperScore::find($id);
+        if (!$score) {
+            return $this->apiError(message: 'Score not found', code: 404);
+        }
+        $score = PaperScoreResource::make($score);
+        return $this->apiSuccess(data: compact(['score']));
     }
 
     public function update(Request $request, PaperScore $score)

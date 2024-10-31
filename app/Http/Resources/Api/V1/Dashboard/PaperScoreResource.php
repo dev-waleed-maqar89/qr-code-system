@@ -23,7 +23,8 @@ class PaperScoreResource extends JsonResource
             ],
             'paper' => [
                 'id' => $this->paper_id,
-                'title' => $this->paper->title
+                'title' => $this->paper->title,
+                'code' => $this->paper->code
             ],
             'admin' => [
                 'id' => $this->admin_id,
