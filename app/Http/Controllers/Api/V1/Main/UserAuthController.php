@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Min\UserRegisterRequest;
 use App\Http\Resources\Api\V1\Main\UserResource;
 use App\Http\Traits\ApiResponseTrait;
+use App\Mail\Main\UserRegisterMail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class UserAuthController extends Controller
@@ -30,7 +32,8 @@ class UserAuthController extends Controller
             'user' => new UserResource($user),
             'token' => $token
         ];
-        return $this->apiSuccess($data);
+        Mail::to($request->email)->send(new UserRegisterMail($user));
+        return $this->apiSuccess(data: $data, message: 'User registered successfully');
     }
 
     public function login(Request $request)
