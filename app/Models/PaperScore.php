@@ -11,6 +11,7 @@ class PaperScore extends Model
         'user_id',
         'admin_id',
         'score',
+        'is_marked'
     ];
 
     public function paper()
