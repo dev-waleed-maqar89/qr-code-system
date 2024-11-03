@@ -18,7 +18,8 @@ class AdminPaperController extends Controller
     use ApiResponseTrait;
     public function index()
     {
-        //
+        $papers = Paper::all();
+        return $this->apiSuccess(data: compact('papers'));
     }
 
 

@@ -44,6 +44,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::put('/score/{score}/update', [AdminScoreController::class, 'update']);
         }
     );
+    Route::get('papers', [AdminPaperController::class, 'index']);
     Route::get('paper/{paper}/scores', [AdminPaperController::class, 'scores']);
     Route::get('score/{score}', [AdminScoreController::class, 'show']);
     // Show all users scores
