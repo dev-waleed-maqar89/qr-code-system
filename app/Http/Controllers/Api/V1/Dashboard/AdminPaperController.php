@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Dashboard\PaperCreateRequest;
+use App\Http\Resources\APi\V1\Dashboard\PaperResource;
 use App\Http\Resources\Api\V1\Dashboard\PaperScoreResource;
 use App\Http\Traits\ApiResponseTrait;
 use App\Jobs\Dashboard\PaperScoreMailJob;
@@ -18,7 +19,7 @@ class AdminPaperController extends Controller
     use ApiResponseTrait;
     public function index()
     {
-        $papers = Paper::all();
+        $papers = PaperResource::collection(Paper::all());
         return $this->apiSuccess(data: compact('papers'));
     }
 
@@ -31,6 +32,7 @@ class AdminPaperController extends Controller
             'max_score' => $request->max_score,
             'code' => $uuid
         ]);
+        $paper = new PaperResource($paper);
 
         return $this->apiSuccess(message: 'Paper created successfully', data: compact('paper'));
     }
