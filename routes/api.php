@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Dashboard\AdminExamController;
 use App\Http\Controllers\Api\V1\Dashboard\AdminPaperController;
 use App\Http\Controllers\Api\V1\Dashboard\AdminQuestionController;
 use App\Http\Controllers\Api\V1\Dashboard\AdminScoreController;
+use App\Http\Controllers\APi\V1\Dashboard\AdminUserController;
 use App\Http\Controllers\Api\V1\Main\UserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,17 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(
         [
             'prefix' => 'dashboard',
+            'middleware' => ['auth:sanctum', 'admin:supervisor,admin']
+        ],
+        function () {
+            Route::post('/score/store', [AdminScoreController::class, 'store']);
+            Route::get('users', [AdminUserController::class, 'index']);
+            Route::get('user/{user}', [AdminUserController::class, 'show']);
+        }
+    );
+    Route::group(
+        [
+            'prefix' => 'dashboard',
             'middleware' => ['auth:sanctum', 'admin:supervisor']
         ],
         function () {
@@ -45,7 +57,6 @@ Route::group(['prefix' => 'v1'], function () {
             Route::put('/score/{score}/update', [AdminScoreController::class, 'update']);
         }
     );
-    Route::post('/score/store', [AdminScoreController::class, 'store'])->middleware('auth:sanctum', 'admin:supervisor,admin');
     Route::get('papers', [AdminPaperController::class, 'index']);
     Route::get('paper/{paper}/scores', [AdminPaperController::class, 'scores']);
     Route::get('score/{score}', [AdminScoreController::class, 'show']);
