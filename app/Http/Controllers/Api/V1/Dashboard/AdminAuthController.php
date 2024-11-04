@@ -48,4 +48,13 @@ class AdminAuthController extends Controller
         ];
         return $this->apiSuccess(data: $data, message: 'Logged in successfully');
     }
+
+    public function profile(Request $request)
+    {
+        if (!Auth::guard('admin-api')->check()) {
+            return $this->apiError(message: 'Unauthorized', code: 401);
+        }
+        $admin = new AdminResource($request->user());
+        return $this->apiSuccess(data: compact('admin'));
+    }
 }

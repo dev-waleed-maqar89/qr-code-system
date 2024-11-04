@@ -24,6 +24,7 @@ Route::group(['prefix' => 'v1'], function () {
         // admin routes
         Route::post('/admin/register', [AdminAuthController::class, 'register'])->middleware('auth:sanctum', 'admin:supervisor');
         Route::post('/admin/login', [AdminAuthController::class, 'login']);
+        Route::get('/admin/profile', [AdminAuthController::class, 'profile'])->middleware('auth:sanctum');
     });
     Route::group(
         [
