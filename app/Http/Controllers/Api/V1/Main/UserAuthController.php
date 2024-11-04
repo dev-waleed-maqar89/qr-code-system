@@ -9,6 +9,7 @@ use App\Http\Traits\ApiResponseTrait;
 use App\Mail\Main\UserRegisterMail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -58,5 +59,14 @@ class UserAuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return $this->apiSuccess(message: 'Logged out successfully');
+    }
+
+    public function profile(Request $request)
+    {
+        if (!Auth::guard('user-api')->check()) {
+            return $this->apiError(message: 'Unauthorized', code: 401);
+        }
+        $user = new UserResource($request->user());
+        return $this->apiSuccess(data: compact('user'));
     }
 }

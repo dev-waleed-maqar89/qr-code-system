@@ -20,6 +20,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/user/register', [UserAuthController::class, 'register']);
         Route::post('/user/login', [UserAuthController::class, 'login']);
         Route::post('/user/logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
+        Route::get('/user/profile', [UserAuthController::class, 'profile'])->middleware('auth:sanctum');
         // admin routes
         Route::post('/admin/register', [AdminAuthController::class, 'register'])->middleware('auth:sanctum', 'admin:supervisor');
         Route::post('/admin/login', [AdminAuthController::class, 'login']);
