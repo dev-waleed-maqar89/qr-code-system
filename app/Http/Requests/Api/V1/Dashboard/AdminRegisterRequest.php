@@ -25,7 +25,7 @@ class AdminRegisterRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:admins,username'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', 'max:255', 'in:supervisor,admin,editor'],
+            'role' => ['required', 'string', 'max:255', 'in:supervisor,admin'],
         ];
     }
 }
