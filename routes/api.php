@@ -21,13 +21,13 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/user/login', [UserAuthController::class, 'login']);
         Route::post('/user/logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
         // admin routes
-        Route::post('/admin/register', [AdminAuthController::class, 'register']);
+        Route::post('/admin/register', [AdminAuthController::class, 'register'])->middleware('auth:sanctum', 'admin:supervisor');
         Route::post('/admin/login', [AdminAuthController::class, 'login']);
     });
     Route::group(
         [
             'prefix' => 'dashboard',
-            'middleware' => ['auth:sanctum', 'admin:supervisor,admin,editor']
+            'middleware' => ['auth:sanctum', 'admin:supervisor']
         ],
         function () {
             // exam routes
@@ -40,10 +40,10 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/paper/store', [AdminPaperController::class, 'store']);
             Route::put('/paper/{paper}/finish-marking', [AdminPaperController::class, 'finish_marking']);
             // score routes
-            Route::post('/score/store', [AdminScoreController::class, 'store']);
             Route::put('/score/{score}/update', [AdminScoreController::class, 'update']);
         }
     );
+    Route::post('/score/store', [AdminScoreController::class, 'store'])->middleware('auth:sanctum', 'admin:supervisor,admin');
     Route::get('papers', [AdminPaperController::class, 'index']);
     Route::get('paper/{paper}/scores', [AdminPaperController::class, 'scores']);
     Route::get('score/{score}', [AdminScoreController::class, 'show']);
