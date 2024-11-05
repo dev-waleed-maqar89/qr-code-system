@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         Admin::create([
             'name' => 'SuperVisor',
             'username' => 'supervisor',
+            'role' => 'supervisor',
             'password' => bcrypt('Xxx123##'),
         ]);
     }
