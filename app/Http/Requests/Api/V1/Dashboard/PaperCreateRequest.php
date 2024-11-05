@@ -23,7 +23,20 @@ class PaperCreateRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'max_score' => ['required', 'numeric'],
+            'max_score' => ['required', 'numeric', 'min:0', 'max:1000'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => __('validation/papercreate.title.required'),
+            'title.string' => __('validation/papercreate.title.string'),
+            'title.max' => __('validation/papercreate.title.max'),
+            'max_score.required' => __('validation/papercreate.max_score.required'),
+            'max_score.numeric' => __('validation/papercreate.max_score.numeric'),
+            'max_score.min' => __('validation/papercreate.max_score.min'),
+            'max_score.max' => __('validation/papercreate.max_score.max'),
         ];
     }
 }
