@@ -33,6 +33,21 @@ class UserRegisterRequest extends FormRequest
     {
         return [
             'name.required' => __('validation/userregister.name.required'),
+            'name.string' => __('validation/userregister.name.string'),
+            'name.max' => __('validation/userregister.name.max'),
+            'email.required' => __('validation/userregister.email.required'),
+            'email.string' => __('validation/userregister.email.string'),
+            'email.email' => __('validation/userregister.email.email'),
+            'email.max' => __('validation/userregister.email.max'),
+            'email.unique' => __('validation/userregister.email.unique'),
+            'parent_email.required' => __('validation/userregister.parent_email.required'),
+            'parent_email.string' => __('validation/userregister.parent_email.string'),
+            'parent_email.email' => __('validation/userregister.parent_email.email'),
+            'parent_email.max' => __('validation/userregister.parent_email.max'),
+            'password.required' => __('validation/userregister.password.required'),
+            'password.string' => __('validation/userregister.password.string'),
+            'password.min' => __('validation/userregister.password.min'),
+            'password.confirmed' => __('validation/userregister.password.confirmed'),
         ];
     }
 }
