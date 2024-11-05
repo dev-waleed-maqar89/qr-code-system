@@ -30,4 +30,18 @@ class ScoreCreateRequest extends FormRequest
             'score' => ['required', 'numeric', 'min:0', 'max:' . $maxScore],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'paper_id.required' => __('validation/scorecreate.paper_id.required'),
+            'paper_id.exists' => __('validation/scorecreate.paper_id.exists'),
+            'user_id.required' => __('validation/scorecreate.user_id.required'),
+            'user_id.exists' => __('validation/scorecreate.user_id.exists'),
+            'score.required' => __('validation/scorecreate.score.required'),
+            'score.numeric' => __('validation/scorecreate.score.numeric'),
+            'score.min' => __('validation/scorecreate.score.min'),
+            'score.max' => __('validation/scorecreate.score.max'),
+        ];
+    }
 }

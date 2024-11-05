@@ -53,9 +53,17 @@ class AdminScoreController extends Controller
     public function update(Request $request, PaperScore $score)
     {
         $paper = Paper::find($score->paper_id);
-        $request->validate([
-            'score' => ['required', 'numeric', 'min:0', 'max:' . $paper->max_score]
-        ]);
+        $request->validate(
+            [
+                'score' => ['required', 'numeric', 'min:0', 'max:' . $paper->max_score]
+            ],
+            [
+                'score.required' => __('validation/scorecreate.score.required'),
+                'score.numeric' => __('validation/scorecreate.score.numeric'),
+                'score.min' => __('validation/scorecreate.score.min'),
+                'score.max' => __('validation/scorecreate.score.max'),
+            ]
+        );
         if ($score->is_marked == 1) {
             return $this->apiError(message: 'Score already marked', code: 400);
         }
