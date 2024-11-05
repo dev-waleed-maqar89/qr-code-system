@@ -19,13 +19,10 @@ class AdminAuthController extends Controller
         $admin = Admin::create([
             'name' => $request->name,
             'username' => $request->username,
-            'password' => bcrypt($request->password),
-            'role' => $request->role
+            'password' => bcrypt($request->password)
         ]);
-        $token = $admin->createToken('api_token')->plainTextToken;
         $data = [
-            'admin' => new AdminResource($admin),
-            'token' => $token
+            'admin' => new AdminResource($admin)
         ];
         return $this->apiSuccess($data);
     }

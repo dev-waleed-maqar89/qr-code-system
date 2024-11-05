@@ -25,7 +25,6 @@ class AdminRegisterRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:admins,username'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', 'max:255', 'in:supervisor,admin'],
         ];
     }
 
@@ -43,10 +42,6 @@ class AdminRegisterRequest extends FormRequest
             'password.string' => __('validation/adminregister.password.string'),
             'password.min' => __('validation/adminregister.password.min'),
             'password.confirmed' => __('validation/adminregister.password.confirmed'),
-            'role.required' => __('validation/adminregister.role.required'),
-            'role.string' => __('validation/adminregister.role.string'),
-            'role.max' => __('validation/adminregister.role.max'),
-            'role.in' => __('validation/adminregister.role.in'),
         ];
     }
 }
