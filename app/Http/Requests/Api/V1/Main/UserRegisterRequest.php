@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1\Main;
 
+use App\Rules\SpecificStartAndLength;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRegisterRequest extends FormRequest
@@ -24,8 +25,8 @@ class UserRegisterRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required'],
-            'identity' => ['required'],
+            'phone' => ['required', new SpecificStartAndLength(9, [5])],
+            'identity' => ['required', new SpecificStartAndLength(10, [1, 2])],
             'birth_date' => ['required', 'date'],
             'parent_email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
