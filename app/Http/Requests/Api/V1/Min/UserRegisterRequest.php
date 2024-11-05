@@ -28,4 +28,11 @@ class UserRegisterRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => __('validation/userregister.name.required'),
+        ];
+    }
 }
