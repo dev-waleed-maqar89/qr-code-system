@@ -19,10 +19,13 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'phone' => $this->phone,
+            'identity' => $this->identity,
+            'birth_date' => $this->birth_date,
             'parent_email' => $this->parent_email,
             'total_score' => $this->total_score,
+            'scores' => PaperScoreResource::collection($this->scores),
             'qr_code' => $this->qr_code,
-            'scores' => PaperScoreResource::collection($this->scores)
         ];
     }
 }

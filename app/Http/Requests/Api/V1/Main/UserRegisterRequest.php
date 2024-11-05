@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Min;
+namespace App\Http\Requests\Api\V1\Main;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,6 +24,9 @@ class UserRegisterRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required'],
+            'identity' => ['required'],
+            'birth_date' => ['required', 'date'],
             'parent_email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
@@ -40,6 +43,10 @@ class UserRegisterRequest extends FormRequest
             'email.email' => __('validation/userregister.email.email'),
             'email.max' => __('validation/userregister.email.max'),
             'email.unique' => __('validation/userregister.email.unique'),
+            'phone.required' => __('validation/userregister.phone.required'),
+            'identity.required' => __('validation/userregister.identity.required'),
+            'birth_date.required' => __('validation/userregister.birth_date.required'),
+            'birth_date.date' => __('validation/userregister.birth_date.date'),
             'parent_email.required' => __('validation/userregister.parent_email.required'),
             'parent_email.string' => __('validation/userregister.parent_email.string'),
             'parent_email.email' => __('validation/userregister.parent_email.email'),
