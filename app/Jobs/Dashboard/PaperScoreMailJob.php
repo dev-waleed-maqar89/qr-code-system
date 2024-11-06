@@ -3,7 +3,7 @@
 namespace App\Jobs\Dashboard;
 
 use App\Mail\Dashboard\UserScoreMail;
-use App\Models\Paper;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Mail;
@@ -15,7 +15,7 @@ class PaperScoreMailJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Paper $paper)
+    public function __construct()
     {
         //
     }
@@ -25,9 +25,10 @@ class PaperScoreMailJob implements ShouldQueue
      */
     public function handle(): void
     {
-        foreach ($this->paper->scores as $score) {
+        $users = User::all();
+        foreach ($users as $user) {
             sleep(2);
-            Mail::to($score->user->parent_email)->send(new UserScoreMail($score));
+            Mail::to($user->parent_email)->send(new UserScoreMail($user));
         }
     }
 }

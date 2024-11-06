@@ -2,7 +2,7 @@
 
 namespace App\Mail\Dashboard;
 
-use App\Models\PaperScore;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,15 +13,10 @@ use Illuminate\Queue\SerializesModels;
 class UserScoreMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public PaperScore $score;
     /**
      * Create a new message instance.
      */
-    public function __construct($score)
-    {
-        $this->score = $score;
-    }
+    public function __construct(public User $user) {}
 
     /**
      * Get the message envelope.
@@ -40,7 +35,7 @@ class UserScoreMail extends Mailable
     {
         return new Content(
             view: 'Mails.Dashboard.PaperScoreMail',
-            with: ['score' => $this->score]
+            with: ['user' => $this->user]
         );
     }
 

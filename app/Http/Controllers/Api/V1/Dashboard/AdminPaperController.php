@@ -47,8 +47,13 @@ class AdminPaperController extends Controller
 
     public function finish_marking(Paper $paper)
     {
-        PaperScoreMailJob::dispatch($paper);
         $paper->scores()->update(['is_marked' => 1]);
+        $paper->update(['marked' => 1]);
+        $unMarkedPapers = Paper::where('marked', 0)->get();
+        if ($unMarkedPapers->count() == 0) {
+            PaperScoreMailJob::dispatch();
+        }
+
         return $this->apiSuccess(message: 'Marked successfully');
     }
 }
