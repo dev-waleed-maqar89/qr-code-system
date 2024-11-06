@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('papers', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('code');
-            $table->string('title');
-            $table->float('max_score');
-            $table->timestamps();
+        Schema::table('papers', function (Blueprint $table) {
+            $table->boolean('marked')
+                ->default(false)
+                ->after('max_score');
         });
     }
 
@@ -25,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('papers');
+        Schema::table('papers', function (Blueprint $table) {
+            $table->dropColumn('marked');
+        });
     }
 };

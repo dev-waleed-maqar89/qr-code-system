@@ -10,6 +10,7 @@ class Paper extends Model
         'code',
         'title',
         'max_score',
+        'marked',
     ];
 
     public function scores()
