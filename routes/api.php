@@ -30,12 +30,11 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(
         [
             'prefix' => 'dashboard',
-            'middleware' => ['auth:sanctum', 'admin:supervisor,admin']
+            'middleware' => ['auth:sanctum', 'admin:admin']
         ],
         function () {
             Route::post('/score/store', [AdminScoreController::class, 'store']);
             Route::get('users', [AdminUserController::class, 'index']);
-            Route::get('user/{user}', [AdminUserController::class, 'show']);
         }
     );
     Route::group(
@@ -51,15 +50,16 @@ Route::group(['prefix' => 'v1'], function () {
             // answer routes
             Route::post('/answer/store', [AdminAnswerController::class, 'store']);
             // paper routes
+            Route::get('papers', [AdminPaperController::class, 'index']);
             Route::post('/paper/store', [AdminPaperController::class, 'store']);
             Route::put('/paper/{paper}/finish-marking', [AdminPaperController::class, 'finish_marking']);
             // score routes
+            Route::get('scores', [AdminScoreController::class, 'index']);
+            Route::get('paper/{paper}/scores', [AdminPaperController::class, 'scores']);
+            Route::get('score/{score}', [AdminScoreController::class, 'show']);
             Route::put('/score/{score}/update', [AdminScoreController::class, 'update']);
+            // user routes
+            Route::get('user/{user}', [AdminUserController::class, 'show']);
         }
     );
-    Route::get('papers', [AdminPaperController::class, 'index']);
-    Route::get('paper/{paper}/scores', [AdminPaperController::class, 'scores']);
-    Route::get('score/{score}', [AdminScoreController::class, 'show']);
-    // Show all users scores
-    Route::get('scores', [AdminScoreController::class, 'index']);
 });
